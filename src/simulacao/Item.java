@@ -7,15 +7,14 @@ import javax.swing.ImageIcon;
  * Representa os veiculos da simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
-public class Veiculo {
+public class Item {
     private Localizacao localizacaoAtual;
     private Localizacao localizacaoDestino;
-    private Image imagem;
+    public Image imagem;
 
-    public Veiculo(Localizacao localizacao) {
+    public Item(Localizacao localizacao) {
         this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
-        imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.jpg")).getImage();
     }
 
     public Localizacao getLocalizacaoAtual() {
@@ -45,4 +44,12 @@ public class Veiculo {
             setLocalizacaoAtual(proximaLocalizacao);
         }
     } 
+    
+    public boolean chegouDestino(){
+        if(getLocalizacaoAtual() == getLocalizacaoDestino()){
+           return true; 
+        } else {
+           return false;
+        }
+    }
 }
