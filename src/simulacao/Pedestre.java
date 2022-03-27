@@ -15,10 +15,14 @@ public class Pedestre extends Item{
         super.imagem = new ImageIcon(getClass().getResource("Imagens/pessoa.png")).getImage();
     }
 
-    public void executarAcao(){
+    public void executarAcao(Mapa mapa){
         Localizacao destino = getLocalizacaoDestino();
+        Localizacao anterior = getLocalizacaoAtual();
         if(destino != null){
             Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(super.getLocalizacaoDestino());
+            while(mapa.getItem(proximaLocalizacao.getX(), proximaLocalizacao.getY()) != null){
+                proximaLocalizacao = new Localizacao(anterior.getX(), anterior.getY());
+            }
             setLocalizacaoAtual(proximaLocalizacao);
         }
     }

@@ -15,10 +15,14 @@ public class Ciclista extends Item{
         super.imagem = new ImageIcon(getClass().getResource("Imagens/bicicleta.jpg")).getImage();
     }
 
-    public void executarAcao(){
+    public void executarAcao(Mapa mapa){
         Localizacao destino = getLocalizacaoDestino();
+        Localizacao anterior = getLocalizacaoAtual();
         if(destino != null){
-            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
+            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(super.getLocalizacaoDestino());
+            while(mapa.getItem(proximaLocalizacao.getX(), proximaLocalizacao.getY()) != null){
+                proximaLocalizacao = new Localizacao(anterior.getX(), anterior.getY());
+            }
             setLocalizacaoAtual(proximaLocalizacao);
         }
     }

@@ -27,4 +27,8 @@ public class Mercadoria extends Item{
             setLocalizacaoAtual(proximaLocalizacao);
         }
     }
+    
+    public int getLoja(){
+        return loja;
+    }
 }

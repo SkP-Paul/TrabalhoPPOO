@@ -6,13 +6,14 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class Simulacao {
-    private Item veiculo;
-    private Item veiculo2;
-    private Item ciclista;
-    private Item pedestre;
-    private Item mercadoria;
-    private Item mercadoria2;
+    private Caminhao veiculo;
+    private Caminhao veiculo2;
+    private Ciclista ciclista;
+    private Pedestre pedestre;
+    private Mercadoria mercadoria;
+    private Mercadoria mercadoria2;
     private JanelaSimulacao janelaSimulacao;
+    private int contador;
     private Mapa mapa;
     
     public Simulacao() {
@@ -69,13 +70,36 @@ public class Simulacao {
         if(veiculo.chegouDestino()){
             veiculo.setLocalizacaoDestino(mercadoria.getLocalizacaoDestino());
         }
-        veiculo.executarAcao();
+        veiculo.executarAcao(mapa, mercadoria);
+        if(veiculo.chegouDestino() && !veiculo.getMercadoriaPega()){
+            veiculo.setLocalizacaoDestino(mercadoria.getLocalizacaoDestino());
+            veiculo.setMercadoriaPega(true);
+            if(contador >= 6 ){
+                mapa.removerItem(mercadoria);
+                mercadoria.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+                mapa.adicionarItem(mercadoria);
+                contador = 0;
+            }
+        } else if(veiculo.chegouDestino() && veiculo.getMercadoriaPega()){
+            veiculo.setLocalizacaoDestino(mercadoria.getLocalizacaoAtual());
+            veiculo.setMercadoriaPega(false);
+        }
         mapa.adicionarItem(veiculo);
         
         mapa.removerItem(veiculo2);
-        veiculo2.executarAcao();
-        if(veiculo2.chegouDestino()){
+        veiculo2.executarAcao(mapa, mercadoria2);
+        if(veiculo2.chegouDestino() && !veiculo2.getMercadoriaPega()){
             veiculo2.setLocalizacaoDestino(mercadoria2.getLocalizacaoDestino());
+            veiculo2.setMercadoriaPega(true);
+            if(contador >= 6 ){
+                mapa.removerItem(mercadoria2);
+                mercadoria2.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+                mapa.adicionarItem(mercadoria2);
+                contador = 0;
+            }
+        } else if(veiculo2.chegouDestino() && veiculo2.getMercadoriaPega()){
+            veiculo2.setLocalizacaoDestino(mercadoria2.getLocalizacaoAtual());
+            veiculo2.setMercadoriaPega(false);
         }
         mapa.adicionarItem(veiculo2);
         
@@ -83,14 +107,14 @@ public class Simulacao {
         if(ciclista.chegouDestino()){
             ciclista.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
         }
-        ciclista.executarAcao();
+        ciclista.executarAcao(mapa);
         mapa.adicionarItem(ciclista);
         
         mapa.removerItem(pedestre);
         if(pedestre.chegouDestino()){
             pedestre.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
         }
-        pedestre.executarAcao();
+        pedestre.executarAcao(mapa);
         mapa.adicionarItem(pedestre);
         
         janelaSimulacao.executarAcao();
@@ -99,6 +123,7 @@ public class Simulacao {
     private void esperar(int milisegundos){
         try{
             Thread.sleep(milisegundos);
+            contador++;
         }catch(InterruptedException e){
             System.out.println(e.getMessage());
         }
