@@ -15,6 +15,16 @@ public class Ciclista extends Item{
         super.imagem = new ImageIcon(getClass().getResource("Imagens/bicicleta.jpg")).getImage();
     }
 
+    public void executarAcao(){
+        Localizacao destino = getLocalizacaoDestino();
+        if(destino != null){
+            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
+            setLocalizacaoAtual(proximaLocalizacao);
+        }
+    }
+    
+    /*
+    Função de Açao com verificação de colisão v1.0
     public void executarAcao(Mapa mapa){
         Localizacao destino = getLocalizacaoDestino();
         Localizacao anterior = getLocalizacaoAtual();
@@ -26,4 +36,5 @@ public class Ciclista extends Item{
             setLocalizacaoAtual(proximaLocalizacao);
         }
     }
+    */
 }

@@ -36,14 +36,14 @@ public class Item {
     public void setLocalizacaoDestino(Localizacao localizacaoDestino) {
         this.localizacaoDestino = localizacaoDestino;
     }
-    /*
+    
     public void executarAcao(){
         Localizacao destino = getLocalizacaoDestino();
         if(destino != null){
             Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(localizacaoDestino);
             setLocalizacaoAtual(proximaLocalizacao);
         }
-    } */
+    } 
     
     public boolean chegouDestino(){
         if(getLocalizacaoAtual() == getLocalizacaoDestino()){

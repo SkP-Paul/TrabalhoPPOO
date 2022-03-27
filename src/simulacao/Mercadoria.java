@@ -8,16 +8,17 @@ import javax.swing.ImageIcon;
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class Mercadoria extends Item{
-    private int loja;
+    private Loja loja;
 
-    public Mercadoria(Localizacao localizacao, int loja) {
+    public Mercadoria(Localizacao localizacao, Loja loja) {
         super(localizacao);
-        this.loja = loja;
-        if(loja == 1){
-            super.imagem = new ImageIcon(getClass().getResource("Imagens/pacoteML.png")).getImage();
-        } else {
-            super.imagem = new ImageIcon(getClass().getResource("Imagens/pacoteCB.png")).getImage();
-        }
+        this.setLoja(loja);
+        //if(loja == 1){
+        super.imagem = new ImageIcon(getClass().getResource("Imagens/pacoteML.png")).getImage();
+        super.setLocalizacaoDestino(loja.getLocalizacaoAtual());
+        //} else {
+        //    super.imagem = new ImageIcon(getClass().getResource("Imagens/pacoteCB.png")).getImage();
+        //}
     }
 
     public void executarAcao(){
@@ -27,8 +28,12 @@ public class Mercadoria extends Item{
             setLocalizacaoAtual(proximaLocalizacao);
         }
     }
-    
-    public int getLoja(){
-        return loja;
-    }
+
+	public Loja getLoja() {
+		return loja;
+	}
+
+	public void setLoja(Loja loja) {
+		this.loja = loja;
+	}
 }

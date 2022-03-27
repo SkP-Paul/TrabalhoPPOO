@@ -1,19 +1,25 @@
 package simulacao;
 
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Responsavel pela simulacao.
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class Simulacao {
-    private Caminhao veiculo;
-    private Caminhao veiculo2;
-    private Ciclista ciclista;
-    private Pedestre pedestre;
-    private Mercadoria mercadoria;
-    private Mercadoria mercadoria2;
+	private List <Caminhao> veiculos;
+	private List <Pedestre> pedestres;
+	private List <Ciclista> ciclistas;
+	private List <Mercadoria> mercadorias;
+	private List <Loja> lojas;
+	private static final int qtdLojas = 3;
+	private static final int qtdInicMerc = 5;
+	private static final int qtdCiclistas = 1;
+	private static final int qtdPedestres = 1;
+	private static final int qtdCaminhoes = 2;
+	private int contador = 0;
     private JanelaSimulacao janelaSimulacao;
-    private int contador;
     private Mapa mapa;
     
     public Simulacao() {
@@ -21,30 +27,40 @@ public class Simulacao {
         mapa = new Mapa();
         int largura = mapa.getLargura();
         int altura = mapa.getAltura();
+        veiculos = new ArrayList<Caminhao>();
+        pedestres = new ArrayList<Pedestre>();
+        ciclistas = new ArrayList<Ciclista>();
+        mercadorias = new ArrayList<Mercadoria>();
+        lojas = new ArrayList<Loja>();
+        for (int i =0; i< qtdLojas; i++) {
+        	Loja loja = new Loja(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	lojas.add(loja);
+        	mapa.adicionarItem(loja);
+        }
         
-        ciclista = new Ciclista(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Cria um veiculo em uma posicao aleatoria
-        ciclista.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(ciclista);//Inicializando o mapa com o veículo
+        for (int i=0; i<qtdCiclistas; i++) {
+        	Ciclista ciclista = new Ciclista(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	ciclista.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	ciclistas.add(ciclista);
+        	mapa.adicionarItem(ciclista);
+        }
+        for (int i=0; i<qtdCaminhoes; i++) {
+        	Caminhao caminhao = new Caminhao(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	veiculos.add(caminhao);
+        }
+        for (int i=0; i<qtdPedestres; i++) {
+        	Pedestre pedestre = new Pedestre(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	pedestre.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	pedestres.add(pedestre);
+        }
         
-        pedestre = new Pedestre(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Cria um veiculo em uma posicao aleatoria
-        pedestre.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(pedestre);//Inicializando o mapa com o veículo
-        
-        mercadoria = new Mercadoria(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)), 1);//Cria um veiculo em uma posicao aleatoria
-        mercadoria.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(mercadoria);//Inicializando o mapa com o veículo
-        
-        mercadoria2 = new Mercadoria(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)), 2);//Cria um veiculo em uma posicao aleatoria
-        mercadoria2.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(mercadoria2);//Inicializando o mapa com o veículo
-        
-        veiculo = new Caminhao(pedestre.getLocalizacaoAtual());//Cria um veiculo em uma posicao aleatoria
-        veiculo.setLocalizacaoDestino(mercadoria.getLocalizacaoAtual());//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(veiculo);//Inicializando o mapa com o veículo
-        
-        veiculo2 = new Caminhao(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));//Cria um veiculo em uma posicao aleatoria
-        veiculo2.setLocalizacaoDestino(mercadoria2.getLocalizacaoAtual());//Define a posicao destino aleatoriamente
-        mapa.adicionarItem(veiculo2);//Inicializando o mapa com o veículo
+        for (int i=0; i<qtdInicMerc; i++) {
+        	Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)),lojas.get(rand.nextInt(lojas.size())));
+        	mercadorias.add(mercadoria);
+        	Caminhao c = veiculos.get(rand.nextInt(veiculos.size()));
+        	c.addMercadoria(mercadoria);
+        	mapa.adicionarItem(mercadoria);
+        }
         
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
@@ -53,70 +69,73 @@ public class Simulacao {
         janelaSimulacao.executarAcao();
         for (int i = 0; i < numPassos; i++) {
             executarUmPasso();
-            mapa.adicionarItem(veiculo);
-            mapa.adicionarItem(veiculo2);
-            mapa.adicionarItem(ciclista);
-            mapa.adicionarItem(pedestre);
+            for (Caminhao caminhao : veiculos) {
+            	mapa.adicionarItem(caminhao);
+            }
+            for (Ciclista ciclista : ciclistas) {
+            	mapa.adicionarItem(ciclista);
+            }
+            for (Pedestre pedestre : pedestres) {
+            	mapa.adicionarItem(pedestre);
+            }
+            for (Loja loja : lojas) {
+            	mapa.adicionarItem(loja);
+            }
+            for (Mercadoria mercadoria : mercadorias) {
+            	mapa.adicionarItem(mercadoria);
+            }
+            if (contador >= 10) {
+            	criarNovaMercadoria();
+            	contador=0;
+            }
             esperar(100);
         }        
     }
 
-    private void executarUmPasso() {
+	private void executarUmPasso() {
         Random rand = new Random();
         int largura = mapa.getLargura();
         int altura = mapa.getAltura();
-        
-        mapa.removerItem(veiculo);
-        if(veiculo.chegouDestino()){
-            veiculo.setLocalizacaoDestino(mercadoria.getLocalizacaoDestino());
+        for (Caminhao veiculo : veiculos) {
+        	mapa.removerItem(veiculo);
+        	if (veiculo.chegouDestino()) {
+        		if (veiculo.getCarga()){ // Estou com carga e vou entregar
+        			if (veiculo.getProxMercadoria()!=null) { // Está esvaziando a carga
+        				veiculo.setLocalizacaoDestino(veiculo.getProxMercadoria().getLocalizacaoAtual());
+        			}
+        			veiculo.setCarga(false);
+        		} else { // Está coletando a Carga
+        			if (veiculo.getProxMercadoria()!=null) {
+	        			veiculo.setLocalizacaoDestino(veiculo.getProxMercadoria().getLocalizacaoDestino());
+	        			veiculo.setCarga(true);
+	        			mapa.removerItem(veiculo.getProxMercadoria());
+	        			mercadorias.remove(veiculo.getProxMercadoria());
+	        			veiculo.removeMercadoria();
+        			}
+        		}
+        	}
+        	veiculo.executarAcao();
+        	mapa.adicionarItem(veiculo);
         }
-        veiculo.executarAcao(mapa, mercadoria);
-        if(veiculo.chegouDestino() && !veiculo.getMercadoriaPega()){
-            veiculo.setLocalizacaoDestino(mercadoria.getLocalizacaoDestino());
-            veiculo.setMercadoriaPega(true);
-            if(contador >= 6 ){
-                mapa.removerItem(mercadoria);
-                mercadoria.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
-                mapa.adicionarItem(mercadoria);
-                contador = 0;
+        
+        for (Ciclista c : ciclistas) {
+        	mapa.removerItem(c);
+        	if(c.chegouDestino()){
+                c.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
             }
-        } else if(veiculo.chegouDestino() && veiculo.getMercadoriaPega()){
-            veiculo.setLocalizacaoDestino(mercadoria.getLocalizacaoAtual());
-            veiculo.setMercadoriaPega(false);
+            c.executarAcao();
+            mapa.adicionarItem(c);
         }
-        mapa.adicionarItem(veiculo);
-        
-        mapa.removerItem(veiculo2);
-        veiculo2.executarAcao(mapa, mercadoria2);
-        if(veiculo2.chegouDestino() && !veiculo2.getMercadoriaPega()){
-            veiculo2.setLocalizacaoDestino(mercadoria2.getLocalizacaoDestino());
-            veiculo2.setMercadoriaPega(true);
-            if(contador >= 6 ){
-                mapa.removerItem(mercadoria2);
-                mercadoria2.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
-                mapa.adicionarItem(mercadoria2);
-                contador = 0;
+        for (Pedestre p : pedestres) {
+        	mapa.removerItem(p);
+        	if(p.chegouDestino()){
+                p.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
             }
-        } else if(veiculo2.chegouDestino() && veiculo2.getMercadoriaPega()){
-            veiculo2.setLocalizacaoDestino(mercadoria2.getLocalizacaoAtual());
-            veiculo2.setMercadoriaPega(false);
+            p.executarAcao();
+            mapa.adicionarItem(p);
         }
-        mapa.adicionarItem(veiculo2);
         
-        mapa.removerItem(ciclista);
-        if(ciclista.chegouDestino()){
-            ciclista.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
-        }
-        ciclista.executarAcao(mapa);
-        mapa.adicionarItem(ciclista);
-        
-        mapa.removerItem(pedestre);
-        if(pedestre.chegouDestino()){
-            pedestre.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
-        }
-        pedestre.executarAcao(mapa);
-        mapa.adicionarItem(pedestre);
-        
+
         janelaSimulacao.executarAcao();
     }
     
@@ -128,5 +147,14 @@ public class Simulacao {
             System.out.println(e.getMessage());
         }
     }
-    
+    private void criarNovaMercadoria() {
+    	Random rand = new Random();
+    	int altura = mapa.getAltura();
+    	int largura = mapa.getLargura();
+    	Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)),lojas.get(rand.nextInt(lojas.size())));
+    	mercadorias.add(mercadoria);
+    	Caminhao c = veiculos.get(rand.nextInt(veiculos.size()));
+    	c.addMercadoria(mercadoria);
+    	mapa.adicionarItem(mercadoria);
+    }
 }

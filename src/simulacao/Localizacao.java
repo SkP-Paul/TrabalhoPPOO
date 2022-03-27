@@ -9,6 +9,7 @@ import java.util.Random;
 public class Localizacao {
     private int x;
     private int y;
+    private Boolean ocupado;
     private static Random rand = new Random();
     
     /**
@@ -29,6 +30,9 @@ public class Localizacao {
         return y;
     }
     
+    public Boolean getOcupacao() {
+    	return ocupado;
+    }
     /**
      * Gera a localizacao para se mover visando alcançar o destino
      * @param localizacaoDestino: localizacao que se deseja alcancar.
