@@ -1,7 +1,6 @@
 package simulacao;
 
 import java.awt.Image;
-import javax.swing.ImageIcon;
 
 /**
  * Representa os veiculos da simulacao.
@@ -46,10 +45,6 @@ public class Item {
     } 
     
     public boolean chegouDestino(){
-        if(getLocalizacaoAtual() == getLocalizacaoDestino()){
-           return true; 
-        } else {
-           return false;
-        }
+        return getLocalizacaoAtual() == getLocalizacaoDestino();
     }
 }

@@ -1,7 +1,4 @@
 package simulacao;
-
-import java.util.Random;
-
 /**
  * Representa um mapa com todos os itens que participam da simulacao
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann

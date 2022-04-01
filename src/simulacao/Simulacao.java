@@ -13,11 +13,11 @@ public class Simulacao {
 	private List <Ciclista> ciclistas;
 	private List <Mercadoria> mercadorias;
 	private List <Loja> lojas;
-	private static final int qtdLojas = 3;
-	private static final int qtdInicMerc = 5;
+	private static final int qtdLojas = 1;
+	private static final int qtdInicMerc = 1;
 	private static final int qtdCiclistas = 1;
 	private static final int qtdPedestres = 1;
-	private static final int qtdCaminhoes = 2;
+	private static final int qtdCaminhoes = 1;
 	private int contador = 0;
     private JanelaSimulacao janelaSimulacao;
     private Mapa mapa;
@@ -99,19 +99,12 @@ public class Simulacao {
         for (Caminhao veiculo : veiculos) {
         	mapa.removerItem(veiculo);
         	if (veiculo.chegouDestino()) {
-        		if (veiculo.getCarga()){ // Estou com carga e vou entregar
-        			if (veiculo.getProxMercadoria()!=null) { // Está esvaziando a carga
-        				veiculo.setLocalizacaoDestino(veiculo.getProxMercadoria().getLocalizacaoAtual());
-        			}
-        			veiculo.setCarga(false);
-        		} else { // Está coletando a Carga
-        			if (veiculo.getProxMercadoria()!=null) {
-	        			veiculo.setLocalizacaoDestino(veiculo.getProxMercadoria().getLocalizacaoDestino());
-	        			veiculo.setCarga(true);
-	        			mapa.removerItem(veiculo.getProxMercadoria());
-	        			mercadorias.remove(veiculo.getProxMercadoria());
-	        			veiculo.removeMercadoria();
-        			}
+        		if (veiculo.estaCarregado()){
+        			veiculo.descarregar();
+        		} else {
+        			Mercadoria carga = veiculo.carregar();
+                    mercadorias.remove(carga);
+                    mapa.removerItem(carga);
         		}
         	}
         	veiculo.executarAcao();

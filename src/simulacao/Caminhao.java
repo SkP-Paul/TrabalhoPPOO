@@ -9,46 +9,50 @@ import javax.swing.ImageIcon;
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
 public class Caminhao extends Item{
-    private List<Mercadoria> mercadorias;
+    private List<Mercadoria> mercadoriasPendentes;
     private boolean carga;
     public Caminhao(Localizacao localizacao) {
         super(localizacao);
         super.imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.jpg")).getImage();
-        mercadorias = new ArrayList<Mercadoria>();
+        mercadoriasPendentes = new ArrayList<Mercadoria>();
         carga = false;
     }
     
-    public void executarAcao(){
-        Localizacao destino = getLocalizacaoDestino();
-        if(destino != null){
-            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(super.getLocalizacaoDestino());
-            setLocalizacaoAtual(proximaLocalizacao);
-        }
-    }
     
     public void addMercadoria(Mercadoria m) {
-    	mercadorias.add(m);
+    	mercadoriasPendentes.add(m);
     	if (this.getLocalizacaoDestino()==null) {
     		this.setLocalizacaoDestino(m.getLocalizacaoAtual());
     	}
     }
-    
-    public void removeMercadoria() {
-    	mercadorias.remove(0);
+
+    public void descarregar(){
+        if (getProxMercadoria()!=null) {
+            setLocalizacaoDestino(getProxMercadoria().getLocalizacaoAtual());
+        }
+        setCarga(false);
+    }
+
+    public Mercadoria carregar(){
+        if (getProxMercadoria()!=null) {
+            setLocalizacaoDestino(getProxMercadoria().getLocalizacaoDestino());
+            setCarga(true);
+        }
+        return mercadoriasPendentes.remove(0);
     }
     
     public Mercadoria getProxMercadoria() {
-    	Mercadoria m = null;
-    	if (mercadorias.size()>0) {
-    		m = mercadorias.get(0);
-    	}
-    	return m;
+        if(!mercadoriasPendentes.isEmpty())
+    	    return mercadoriasPendentes.get(0);
+        else
+            return null;
     }
-    public boolean getCarga() {
+
+    public boolean estaCarregado() {
     	return carga;
     }
     
-    public void setCarga(boolean bool) {
+    private void setCarga(boolean bool) {
     	carga = bool;
     }
     
