@@ -56,6 +56,16 @@ public class Caminhao extends Item{
     	carga = bool;
     }
     
+    @Override
+    public void executarAcao(Mapa mapa) {
+        Localizacao destino = getLocalizacaoDestino();
+        if(destino != null){
+            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(getLocalizacaoDestino());
+            Item i = mapa.getItem(proximaLocalizacao);
+            if((i instanceof Ciclista || i instanceof Pedestre) == false)
+                setLocalizacaoAtual(proximaLocalizacao);
+        }
+    }
     /*
         Função de Açao com verificação de colisão v1.0
         public void executarAcao(Mapa mapa, Mercadoria mercadoria){

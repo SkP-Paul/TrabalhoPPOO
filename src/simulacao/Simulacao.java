@@ -15,8 +15,8 @@ public class Simulacao {
 	private List <Loja> lojas;
 	private static final int qtdLojas = 1;
 	private static final int qtdInicMerc = 1;
-	private static final int qtdCiclistas = 1;
-	private static final int qtdPedestres = 1;
+	private static final int qtdCiclistas = 10;
+	private static final int qtdPedestres = 10;
 	private static final int qtdCaminhoes = 1;
 	private int contador = 0;
     private JanelaSimulacao janelaSimulacao;
@@ -40,7 +40,7 @@ public class Simulacao {
         
         for (int i=0; i<qtdCiclistas; i++) {
         	Ciclista ciclista = new Ciclista(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
-        	ciclista.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	ciclista.destinoAleatorio(largura, altura);
         	ciclistas.add(ciclista);
         	mapa.adicionarItem(ciclista);
         }
@@ -50,7 +50,7 @@ public class Simulacao {
         }
         for (int i=0; i<qtdPedestres; i++) {
         	Pedestre pedestre = new Pedestre(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
-        	pedestre.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	pedestre.destinoAleatorio(largura, altura);
         	pedestres.add(pedestre);
         }
         
@@ -69,15 +69,6 @@ public class Simulacao {
         janelaSimulacao.executarAcao();
         for (int i = 0; i < numPassos; i++) {
             executarUmPasso();
-            for (Caminhao caminhao : veiculos) {
-            	mapa.adicionarItem(caminhao);
-            }
-            for (Ciclista ciclista : ciclistas) {
-            	mapa.adicionarItem(ciclista);
-            }
-            for (Pedestre pedestre : pedestres) {
-            	mapa.adicionarItem(pedestre);
-            }
             for (Loja loja : lojas) {
             	mapa.adicionarItem(loja);
             }
@@ -93,11 +84,31 @@ public class Simulacao {
     }
 
 	private void executarUmPasso() {
-        Random rand = new Random();
         int largura = mapa.getLargura();
         int altura = mapa.getAltura();
+
+        for (Ciclista c : ciclistas) {
+        	mapa.removerItem(c);
+        	if(c.chegouDestino()){
+                c.destinoAleatorio(largura, altura);
+            }
+            c.executarAcao(mapa);
+            mapa.adicionarItem(c);
+        }
+        System.out.println("ciclista ok");
+        for (Pedestre p : pedestres) {
+        	mapa.removerItem(p);
+        	if(p.chegouDestino()){
+                p.destinoAleatorio(largura, altura);
+            }
+            p.executarAcao(mapa);
+            mapa.adicionarItem(p);
+        }
+        System.out.println("pedestre ok");
         for (Caminhao veiculo : veiculos) {
-        	mapa.removerItem(veiculo);
+            if(mapa.getItem(veiculo.getLocalizacaoAtual()) instanceof Caminhao){
+        	    mapa.removerItem(veiculo);
+            }
         	if (veiculo.chegouDestino()) {
         		if (veiculo.estaCarregado()){
         			veiculo.descarregar();
@@ -107,28 +118,12 @@ public class Simulacao {
                     mapa.removerItem(carga);
         		}
         	}
-        	veiculo.executarAcao();
-        	mapa.adicionarItem(veiculo);
-        }
-        
-        for (Ciclista c : ciclistas) {
-        	mapa.removerItem(c);
-        	if(c.chegouDestino()){
-                c.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
+        	veiculo.executarAcao(mapa);
+            if(mapa.getItem(veiculo.getLocalizacaoAtual()) instanceof Loja == false){
+        	    mapa.adicionarItem(veiculo);
             }
-            c.executarAcao();
-            mapa.adicionarItem(c);
         }
-        for (Pedestre p : pedestres) {
-        	mapa.removerItem(p);
-        	if(p.chegouDestino()){
-                p.setLocalizacaoDestino(new Localizacao(rand.nextInt(largura),rand.nextInt(altura)));
-            }
-            p.executarAcao();
-            mapa.adicionarItem(p);
-        }
-        
-
+        System.out.println("carro ok");
         janelaSimulacao.executarAcao();
     }
     

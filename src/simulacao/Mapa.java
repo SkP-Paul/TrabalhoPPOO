@@ -45,6 +45,10 @@ public class Mapa {
         return itens[x][y];
     }
 
+    public Item getItem(Localizacao loc){
+        return itens[loc.getX()][loc.getY()];
+    }
+
     public int getLargura() {
         return largura;
     }
