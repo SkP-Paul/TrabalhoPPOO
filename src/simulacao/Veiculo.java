@@ -1,22 +1,23 @@
 package simulacao;
 
-import simulacao.Localizacao;
 import java.awt.Image;
+import javax.swing.ImageIcon;
 
 /**
  * Representa os veiculos da simulacao.
  *
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */
-public class Item {
+public class Veiculo {
 
     private Localizacao localizacaoAtual;
     private Localizacao localizacaoDestino;
     private Image imagem;
 
-    public Item(Localizacao localizacao) {
+    public Veiculo(Localizacao localizacao) {
         this.localizacaoAtual = localizacao;
         localizacaoDestino = null;
+        imagem = new ImageIcon(getClass().getResource("Imagens/veiculo.jpg")).getImage();
     }
 
     public Localizacao getLocalizacaoAtual() {
@@ -31,19 +32,19 @@ public class Item {
         return imagem;
     }
 
-    public void setImagem(Image imagem) {
-        this.imagem = imagem;
-    }
-
-    protected void setLocalizacaoAtual(Localizacao localizacaoAtual) {
+    public void setLocalizacaoAtual(Localizacao localizacaoAtual) {
         this.localizacaoAtual = localizacaoAtual;
     }
 
-    protected void setLocalizacaoDestino(Localizacao localizacaoDestino) {
+    public void setLocalizacaoDestino(Localizacao localizacaoDestino) {
         this.localizacaoDestino = localizacaoDestino;
     }
 
-    public boolean chegouDestino() {
-        return getLocalizacaoAtual() == getLocalizacaoDestino();
+    public void executarAcao() {
+        Localizacao destino = getLocalizacaoDestino();
+        if (destino != null) {
+            Localizacao proximaLocalizacao = getLocalizacaoAtual().proximaLocalizacao(localizacaoDestino);
+            setLocalizacaoAtual(proximaLocalizacao);
+        }
     }
 }
