@@ -1,6 +1,5 @@
 package simulacao;
 
-import simulacao.Localizacao;
 import java.awt.*;
 import javax.swing.*;
 

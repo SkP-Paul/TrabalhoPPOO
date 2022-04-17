@@ -1,6 +1,5 @@
 package simulacao;
 
-import simulacao.Localizacao;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +29,9 @@ public class Simulacao {
     private Mapa mapa;
     private Random rand;
     private int largura;
-    private int altura;
-
+    /**
+     * Inicialização dos Atributos e execução do Programa
+     */
     public Simulacao() {
         mapa = new Mapa();
         largura = mapa.getLargura() - 1;
@@ -45,7 +45,10 @@ public class Simulacao {
         ciclistas = new ArrayList<Ciclista>();
         mercadorias = new ArrayList<Mercadoria>();
         lojas = new ArrayList<Loja>();
-
+        /**
+         * Inicialização das Lojas, atribuindo uma posição aleatória e fixa no mapa.
+         * Dentro do mapa podem existir várias Lojas, e estas são adicionadas a um arrayList separado.
+         */
         for (int i = 0; i < qtdLojas; i++) {
             Loja loja = new Loja(new Localizacao(rand.nextInt(largura), 30));
             Item item = mapa.getItem(loja.getLocalizacaoAtual());
@@ -56,45 +59,57 @@ public class Simulacao {
             lojas.add(loja);
             mapa.adicionarItem(loja);
         }
-
+        /**
+         * Inicialização dos Ciclistas, atribuindo uma posição aleatória inicial, e um destino aleatório inicial.
+         * Dentro do mapa podem existir vários Ciclistas, e estes são adicionados a um arrayList separado.
+         */
         for (int i = 0; i < qtdCiclistas; i++) {
-            Ciclista ciclista = new Ciclista(new Localizacao(bordaEsquerda, rand.nextInt(5, 30)));
-            ciclista.setLocalizacaoDestino(new Localizacao(bordaDireita, rand.nextInt(5, 30)));
+            Ciclista ciclista = new Ciclista(new Localizacao(bordaEsquerda, rand.nextInt(25)+5));
+            ciclista.setLocalizacaoDestino(new Localizacao(bordaDireita, rand.nextInt(25)+5));
             Item item = mapa.getItem(ciclista.getLocalizacaoAtual());
             while (item != null) {
-                ciclista.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(5, 30)));
+                ciclista.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
                 item = mapa.getItem(ciclista.getLocalizacaoAtual());
             }
             ciclistas.add(ciclista);
             mapa.adicionarItem(ciclista);
         }
-
+        /**
+         * Inicialização dos Caminhões, atribuindo uma posição aleatória inicial, sem um destino atual.
+         * Dentro do mapa podem existir vários Caminhões, e estes são adicionados a um arrayList separado.
+         */
         for (int i = 0; i < qtdCaminhoes; i++) {
-            Caminhao caminhao = new Caminhao(new Localizacao(rand.nextInt(largura), rand.nextInt(5, 30)));
+            Caminhao caminhao = new Caminhao(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
             Item item = mapa.getItem(caminhao.getLocalizacaoAtual());
             while (item != null) {
-                caminhao.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(5, 30)));
+                caminhao.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
                 item = mapa.getItem(caminhao.getLocalizacaoAtual());
             }
             veiculos.add(caminhao);
         }
-
+        /**
+         * Inicialização dos Pedestres, atribuindo uma posição aleatória inicial, e um destino aleatório.
+         * Dentro do mapa podem existir vários Pedestres, e estes são adicionados a um arrayList separado.
+         */
         for (int i = 0; i < qtdPedestres; i++) {
-            Pedestre pedestre = new Pedestre(new Localizacao(bordaDireita, rand.nextInt(5, 30)));
-            pedestre.setLocalizacaoDestino(new Localizacao(bordaEsquerda, rand.nextInt(5, 30)));
+            Pedestre pedestre = new Pedestre(new Localizacao(bordaDireita, rand.nextInt(25)+5));
+            pedestre.setLocalizacaoDestino(new Localizacao(bordaEsquerda, rand.nextInt(25)+5));
             Item item = mapa.getItem(pedestre.getLocalizacaoAtual());
             while (item != null) {
-                pedestre.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(5, 30)));
+                pedestre.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
                 item = mapa.getItem(pedestre.getLocalizacaoAtual());
             }
             pedestres.add(pedestre);
         }
-
+        /**
+         * Inicialização das Mercadorias, atribuindo uma posição aleatória fixa, um caminhão para coletá-la e uma Loja Destino.
+         * Dentro do mapa podem existir vários Pedestres, e estes são adicionados a um arrayList separado.
+         */
         for (int i = 0; i < qtdInicMerc; i++) {
-            Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(1, 33), rand.nextInt(1, 15)), lojas.get(rand.nextInt(lojas.size())));
+            Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(33)+1, rand.nextInt(15)+1), lojas.get(rand.nextInt(lojas.size())));
             Item item = mapa.getItem(mercadoria.getLocalizacaoAtual());
             while (item != null) {
-                mercadoria.setLocalizacaoAtual(new Localizacao(rand.nextInt(1, 33), rand.nextInt(1, 15)));
+                mercadoria.setLocalizacaoAtual(new Localizacao(rand.nextInt(33)+1, rand.nextInt(15)+1));
                 item = mapa.getItem(mercadoria.getLocalizacaoAtual());
             }
             mercadorias.add(mercadoria);
@@ -105,7 +120,10 @@ public class Simulacao {
 
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
-
+    /**
+     * Inicialização da Execução do Programa
+     * @param numPassos
+     */
     public void executarSimulacao(int numPassos) {
         janelaSimulacao.executarAcao();
         for (int i = 0; i < numPassos; i++) {
@@ -129,7 +147,7 @@ public class Simulacao {
             for (Ciclista c : ciclistas) {
                 mapa.removerItem(c);
                 if (c.chegouDestino()) {
-                    c.setLocalizacaoAtual(new Localizacao(bordaEsquerda, rand.nextInt(5, 30)));
+                    c.setLocalizacaoAtual(new Localizacao(bordaEsquerda, rand.nextInt(25)+5));
                 }
                 c.executarAcao(mapa);
                 mapa.adicionarItem(c);
@@ -141,7 +159,7 @@ public class Simulacao {
             for (Pedestre p : pedestres) {
                 mapa.removerItem(p);
                 if (p.chegouDestino()) {
-                    p.setLocalizacaoAtual(new Localizacao(bordaDireita, rand.nextInt(5, 30)));
+                    p.setLocalizacaoAtual(new Localizacao(bordaDireita, rand.nextInt(25)+5));
                 }
                 p.executarAcao(mapa);
                 mapa.adicionarItem(p);
@@ -181,9 +199,11 @@ public class Simulacao {
             System.out.println(e.getMessage());
         }
     }
-
+    /**
+     * Inserção de nova mercadoria ao Mapa
+     */
     private void criarNovaMercadoria() {
-        Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(1, 33), rand.nextInt(1, 15)), lojas.get(rand.nextInt(lojas.size())));
+        Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(33)+1, rand.nextInt(15)+1), lojas.get(rand.nextInt(lojas.size())));
         mercadorias.add(mercadoria);
         Caminhao c = veiculos.get(rand.nextInt(veiculos.size()));
         c.addMercadoria(mercadoria);

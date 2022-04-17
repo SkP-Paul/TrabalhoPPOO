@@ -1,7 +1,5 @@
 package simulacao;
 
-import simulacao.Localizacao;
-
 /**
  * Representa um mapa com todos os itens que participam da simulacao
  *

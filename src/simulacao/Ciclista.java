@@ -1,10 +1,13 @@
 package simulacao;
 
-import simulacao.Localizacao;
 import javax.swing.ImageIcon;
 
 public class Ciclista extends ItemMovel {
-
+	/**
+	 * Construtor de Ciclista
+	 * Cria uma imagem de ciclista no mapa na sua posição inicial
+	 * @param localizacao
+	 */
     public Ciclista(Localizacao localizacao) {
         super(localizacao);
         setImagem(new ImageIcon(getClass().getResource("Imagens/bicicleta.jpg")).getImage());
@@ -29,7 +32,7 @@ public class Ciclista extends ItemMovel {
                         try {
                             i = mapa.getItem(proximaLocalizacao);
                         } catch (IndexOutOfBoundsException e) {
-                            System.out.println("VALOR FORA DA MATRIZ");
+                            System.out.println("Ciclista // VALOR FORA DA MATRIZ");
                             proximaLocalizacao = getLocalizacaoAtual();
                             i = mapa.getItem(proximaLocalizacao);
                         }

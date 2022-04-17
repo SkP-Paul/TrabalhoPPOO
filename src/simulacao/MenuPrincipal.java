@@ -3,7 +3,9 @@ package simulacao;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-
+/**
+ * Classe para montagem de interface de configuração da Simulação 
+ */
 public class MenuPrincipal {
 
     private JFrame janela;
@@ -14,8 +16,10 @@ public class MenuPrincipal {
     private JSlider sliderCiclistas;
     private JSlider sliderCaminhoes;
     private JButton botaoConfirmar;
-    private boolean verificacao;
-
+    private boolean verificacao; // Verificador se o Usuário confirmou a configuração
+    /**
+     *  Declaração de Atributos do Menu e chamada ao método de elaboração da interface
+     */
     public MenuPrincipal() {
         janela = new JFrame("Configurar Simulação");
         rotuloPedestres = new JLabel("Quantidade de Pedestres: ");
@@ -25,12 +29,14 @@ public class MenuPrincipal {
         sliderCiclistas = new JSlider(1, 21, 5);
         sliderCaminhoes = new JSlider(1, 5, 1);
         botaoConfirmar = new JButton("Confirmar");
-        verificacao = false;
+        verificacao = false; 
 
         montarJanela();
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
+    /**
+     * Construção da Tela inserindo elementos na interface
+     */
     private void montarJanela() {
         janela.setSize(400, 300);
         janela.setLayout(new BorderLayout());
@@ -56,21 +62,23 @@ public class MenuPrincipal {
         painelSul.setLayout(new FlowLayout());
         painelSul.add(botaoConfirmar);
         janela.add(painelSul, BorderLayout.SOUTH);
-        botaoConfirmar.addActionListener(new ActionListener() {
+        botaoConfirmar.addActionListener(new ActionListener() { // Confirmação do Usuário na tela de configuração
             @Override
             public void actionPerformed(ActionEvent e) {
                 int pedestres = sliderPedestres.getValue();
                 int ciclistas = sliderCiclistas.getValue();
                 int caminhoes = sliderCaminhoes.getValue();
-                Simulacao.ajustarConfiguracoes(pedestres, ciclistas, caminhoes);
+                Simulacao.ajustarConfiguracoes(pedestres, ciclistas, caminhoes); // Ajuste de configuração com as entradas do Usuário
                 verificacao = true;
                 janela.dispose();
             }
         });
-
-        janela.dispose();
     }
-
+    /**
+     * Elaboração do Slider
+     * @param s - um Slider
+     * @param majorTicks - Espaçamento entre dois números
+     */
     private void montarSlider(JSlider s, int majorTicks) {
         s.setPaintTicks(true);
         s.setPaintLabels(true);
