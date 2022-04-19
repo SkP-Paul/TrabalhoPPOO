@@ -6,8 +6,7 @@ import java.util.List;
 
 /**
  * Responsavel pela simulacao.
- *
- * @author David J. Barnes and Michael Kolling and Luiz Merschmann
+ * @author Danilo Aparecido Namitala and Pedro H. Marques Siqueira and Jonas Fernandes dos Reis and Paulo Eduardo Soares Rezende
  */
 public class Simulacao {
 
@@ -29,6 +28,7 @@ public class Simulacao {
     private Mapa mapa;
     private Random rand;
     private int largura;
+    private int altura;
     /**
      * Inicialização dos Atributos e execução do Programa
      */
@@ -122,7 +122,7 @@ public class Simulacao {
     }
     /**
      * Inicialização da Execução do Programa
-     * @param numPassos
+     * @param numPassos - número de passos a serem executados
      */
     public void executarSimulacao(int numPassos) {
         janelaSimulacao.executarAcao();
@@ -141,7 +141,10 @@ public class Simulacao {
             esperar(100);
         }
     }
-
+    /**
+     *  Função para executar um movimento de cada elemento (Caminhão, Ciclista e Pedestre)
+     *  Faz uso de um contador (velocidade) em que o resto de sua divisão determina qual elemento deve ser movimentado
+     */
     private void executarUmPasso() {
         if (velocidade % 2 == 0) {
             for (Ciclista c : ciclistas) {
@@ -172,9 +175,9 @@ public class Simulacao {
                 mapa.removerItem(veiculo);
             }
             if (veiculo.chegouDestino()) {
-                if (veiculo.estaCarregado()) {
+                if (veiculo.estaCarregado()) { // verifica se o Veiculo está carregado, caso esteja e tenha alcançado seu destino, esvazia a carga
                     veiculo.descarregar();
-                } else {
+                } else { // caso contrário, ele chegou até a mercadoria, e deve ser carregado
                     Mercadoria carga = veiculo.carregar();
                     mercadorias.remove(carga);
                     mapa.removerItem(carga);
@@ -191,7 +194,10 @@ public class Simulacao {
         contador++;
         janelaSimulacao.executarAcao();
     }
-
+    /**
+     * Função para realizar uma espera em milisegundos entre cada ação no mapa
+     * @param milisegundos - tempo em milisegundos
+     */
     private void esperar(int milisegundos) {
         try {
             Thread.sleep(milisegundos);
@@ -209,7 +215,12 @@ public class Simulacao {
         c.addMercadoria(mercadoria);
         mapa.adicionarItem(mercadoria);
     }
-
+    /**
+     * Recepção de configuração realizada pelo usuário, determina a quantidade de cada elemento móvel na simulação
+     * @param pedestres - Quantidade de Pedestres
+     * @param ciclistas - Quantidade de Ciclistas
+     * @param caminhoes - Quantidade de Caminhões
+     */
     public static void ajustarConfiguracoes(int pedestres, int ciclistas, int caminhoes) {
         qtdPedestres = pedestres;
         qtdCiclistas = ciclistas;

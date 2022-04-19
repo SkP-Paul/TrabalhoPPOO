@@ -5,8 +5,9 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 /**
- * Classe para montagem dos veículos (Caminhões)
- *
+ * Classe para representação dos veículos (Caminhões)
+ * @author Danilo Aparecido Namitala and Pedro H. Marques Siqueira and Jonas Fernandes dos Reis and Paulo Eduardo Soares Rezende
+
  */
 public class Caminhao extends ItemMovel {
 
@@ -15,7 +16,7 @@ public class Caminhao extends ItemMovel {
     
     /**
      * Construtor do caminhão, colocando ícone do veículo na posição designada do mapa.
-     * @param localizacao
+     * @param localizacao - uma Localização no mapa
      */
     public Caminhao(Localizacao localizacao) {
         super(localizacao);
@@ -48,7 +49,7 @@ public class Caminhao extends ItemMovel {
     /**
      * Coleta uma mercadoria, declara a posição de destino para a Loja na qual a mercadoria se destina.
      * Remove o primeiro índice do Array de mercadorias Pendentes, para que a próxima mercadoria seja a primeira.
-     * @return Mercadoria
+     * @return Mercadoria - uma Mercadoria
      */
     public Mercadoria carregar() {
         if (getProxMercadoria() != null) {
@@ -59,7 +60,7 @@ public class Caminhao extends ItemMovel {
     }
     /**
      * Coleta o primeiro índice do Array de Mercadorias.
-     * @return Mercadoria
+     * @return Mercadoria - uma Mercadoria
      */
     public Mercadoria getProxMercadoria() {
         if (!mercadoriasPendentes.isEmpty()) {
@@ -70,7 +71,7 @@ public class Caminhao extends ItemMovel {
     }
     /**
      * Retorna se o Caminhão está carregado ou vazio
-     * @return boolean
+     * @return boolean - Caminhão carregado (true) ou descarregado (false)
      */
     public boolean estaCarregado() {
         return carga;
@@ -78,7 +79,7 @@ public class Caminhao extends ItemMovel {
     
     /**
      * Declara o status de carregamento do caminhão 
-     * @param bool
+     * @param bool - carregar Caminhão  (true) ou descarregar (false)
      */
     private void setCarga(boolean bool) {
         carga = bool;

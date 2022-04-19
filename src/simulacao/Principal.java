@@ -2,7 +2,7 @@ package simulacao;
 
 /**
  *	Programa principal do Projeto, exibe a tela de configuração inicial e realiza a execução do programa. 
- *  @author 
+ *  @author Danilo Aparecido Namitala and Pedro H. Marques Siqueira and Jonas Fernandes dos Reis and Paulo Eduardo Soares Rezende 
  */
 
 public class Principal {
@@ -20,7 +20,7 @@ public class Principal {
         }
 
         Simulacao sim = new Simulacao();
-        sim.executarSimulacao(900);
+        sim.executarSimulacao(900); // Executando 900 passos/ações
         System.out.print("Fim");
     }
 }

@@ -4,7 +4,8 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 /**
- * Classe para montagem de interface de configuração da Simulação 
+ * Classe para montagem de interface de configuração da Simulação
+ * @author Danilo Aparecido Namitala and Pedro H. Marques Siqueira and Jonas Fernandes dos Reis and Paulo Eduardo Soares Rezende
  */
 public class MenuPrincipal {
 
@@ -85,11 +86,16 @@ public class MenuPrincipal {
         s.setMinorTickSpacing(1);
         s.setMajorTickSpacing(majorTicks);
     }
-
+    /**
+     * Exibir a janela da Simulação
+     */
     public void exibirJanela() {
         janela.setVisible(true);
     }
-
+    /**
+     * retornar se o usuário finalizou a configuração
+     * @return verificacao - um booleano indicando o status da configuração concluida (true) ou pendente (false)
+     */
     public boolean simulacaoPronta() {
         return verificacao;
     }
