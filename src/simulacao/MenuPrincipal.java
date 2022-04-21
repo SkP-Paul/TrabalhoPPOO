@@ -85,8 +85,8 @@ public class MenuPrincipal {
     /**
      * Elaboração do Slider
      *
-     * @param s - um Slider
-     * @param majorTicks - Espaçamento entre dois números
+     * @param s: um Slider
+     * @param majorTicks: Espaçamento entre dois números
      */
     private void montarSlider(JSlider s, int majorTicks) {
         s.setPaintTicks(true);
@@ -105,8 +105,8 @@ public class MenuPrincipal {
     /**
      * retornar se o usuário finalizou a configuração
      *
-     * @return verificacao - um booleano indicando o status da configuração
-     * concluida (true) ou pendente (false)
+     * @return boolean -: indica o status da configuração concluida (true) ou
+     * pendente (false)
      */
     public boolean simulacaoPronta() {
         return verificacao;

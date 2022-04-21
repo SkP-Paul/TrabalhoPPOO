@@ -13,7 +13,7 @@ public class Pedestre extends ItemMovel {
     /**
      * Construtor do Pedestre
      *
-     * @param localizacao - Posição inicial de um Pedestre
+     * @param localizacao: Posição inicial de um Pedestre
      */
     public Pedestre(Localizacao localizacao) {
         super(localizacao);

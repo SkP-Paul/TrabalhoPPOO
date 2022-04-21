@@ -131,7 +131,7 @@ public class Simulacao {
     /**
      * Inicialização da Execução do Programa
      *
-     * @param numPassos - número de passos a serem executados
+     * @param numPassos: número de passos a serem executados
      */
     public void executarSimulacao(int numPassos) {
         janelaSimulacao.executarAcao();
@@ -206,8 +206,8 @@ public class Simulacao {
     /**
      * Função para realizar uma espera em milisegundos entre cada ação no mapa
      *
-     * @param milisegundos - tempo em milisegundos
-     * @exception - InterruptedException
+     * @param milisegundos: tempo em milisegundos
+     * @exception InterruptedException
      */
     private void esperar(int milisegundos) {
         try {
@@ -232,9 +232,9 @@ public class Simulacao {
      * Recepção de configuração realizada pelo usuário, determina a quantidade
      * de cada elemento móvel na simulação
      *
-     * @param pedestres - Quantidade de Pedestres
-     * @param ciclistas - Quantidade de Ciclistas
-     * @param caminhoes - Quantidade de Caminhões
+     * @param pedestres: Quantidade de Pedestres
+     * @param ciclistas: Quantidade de Ciclistas
+     * @param caminhoes: Quantidade de Caminhões
      */
     public static void ajustarConfiguracoes(int pedestres, int ciclistas, int caminhoes) {
         qtdPedestres = pedestres;

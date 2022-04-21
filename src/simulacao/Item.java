@@ -16,7 +16,7 @@ public class Item {
     /**
      * Construtor de um item
      *
-     * @param localizacao - uma Localização no Mapa
+     * @param localizacao: uma Localização no Mapa
      */
     public Item(Localizacao localizacao) {
         this.localizacaoAtual = localizacao;
@@ -26,7 +26,7 @@ public class Item {
     /**
      * Função para retornar a Localização atual do Item.
      *
-     * @return Localizacao - a localização onde está o item no momento chamado
+     * @return Localizacao -: a localização onde está o item no momento chamado
      */
     public Localizacao getLocalizacaoAtual() {
         return localizacaoAtual;
@@ -35,7 +35,7 @@ public class Item {
     /**
      * Função para retornar a Localização destino do Item.
      *
-     * @return Localizacao - a localização onde está o item deverá chegar
+     * @return Localizacao -: a localização onde está o item deverá chegar
      */
     public Localizacao getLocalizacaoDestino() {
         return localizacaoDestino;
@@ -44,7 +44,7 @@ public class Item {
     /**
      * Função para retornar a Imagem do Item.
      *
-     * @return Image - uma imagem definida na instanciação
+     * @return Image -: uma imagem definida na instanciação
      */
     public Image getImagem() {
         return imagem;
@@ -53,7 +53,7 @@ public class Item {
     /**
      * Função para adicionar uma Imagem ao Item.
      *
-     * @param imagem - uma imagem para a representação do item no mapa
+     * @param imagem: uma imagem para a representação do item no mapa
      */
     public void setImagem(Image imagem) {
         this.imagem = imagem;
@@ -62,7 +62,7 @@ public class Item {
     /**
      * Função para adicionar uma Localização atual ao Item.
      *
-     * @param localizacaoAtual - uma Localização válida no mapa onde o Item está
+     * @param localizacaoAtual: uma Localização válida no mapa onde o Item está
      */
     protected void setLocalizacaoAtual(Localizacao localizacaoAtual) {
         this.localizacaoAtual = localizacaoAtual;
@@ -71,7 +71,7 @@ public class Item {
     /**
      * Função para adicionar uma Localização destino ao Item.
      *
-     * @param localizacaoDestino - uma Localização válida no mapa para onde o
+     * @param localizacaoDestino: uma Localização válida no mapa para onde o
      * Item irá
      */
     protected void setLocalizacaoDestino(Localizacao localizacaoDestino) {
@@ -81,7 +81,7 @@ public class Item {
     /**
      * Retorna se o Item está na Localização de destino
      *
-     * @return boolean - Item está no destino (true) ou Item não está no destino
+     * @return boolean -: Item está no destino (true) ou Item não está no destino
      * (false)
      */
     public boolean chegouDestino() {

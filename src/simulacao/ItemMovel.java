@@ -12,7 +12,7 @@ public class ItemMovel extends Item {
     /**
      * Construtor de um item Móvel
      *
-     * @param localizacao - uma Localização no Mapa
+     * @param localizacao: uma Localização no Mapa
      */
     public ItemMovel(Localizacao localizacao) {
         super(localizacao);
@@ -21,10 +21,10 @@ public class ItemMovel extends Item {
     /**
      * Calcula a próxima posição livre, adjacênte ao objeto
      *
-     * @param mapa - O mapa da simulação
-     * @param proximaLocalizacao - A próxima localização que o objeto pretende
+     * @param mapa: O mapa da simulação
+     * @param proximaLocalizacao: A próxima localização que o objeto pretende
      * avançar
-     * @exception IndexOutOfBoundsException - exceção de que pode ser sorteado
+     * @exception IndexOutOfBoundsException -: exceção lançada quando é sorteado
      * uma Localização fora do tamanho do mapa e se ocorrer é gerada uma nova
      * Localização
      */
@@ -54,7 +54,7 @@ public class ItemMovel extends Item {
      * posição de destino do objeto, ele não realiza colisões com um outro
      * Ciclista, Pedestre ou Caminhão
      *
-     * @param mapa - o mapa da simulação
+     * @param mapa: o mapa da simulação
      */
     public void executarAcao(Mapa mapa) {
         Localizacao destino = getLocalizacaoDestino();

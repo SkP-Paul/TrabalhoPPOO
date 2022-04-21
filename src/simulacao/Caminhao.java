@@ -20,7 +20,7 @@ public class Caminhao extends ItemMovel {
      * Construtor do caminhão, colocando ícone do veículo na posição designada
      * do mapa.
      *
-     * @param localizacao - uma Localização no mapa
+     * @param localizacao: uma Localização no mapa
      */
     public Caminhao(Localizacao localizacao) {
         super(localizacao);
@@ -33,7 +33,7 @@ public class Caminhao extends ItemMovel {
      * Adiciona uma mercadoria ao ArrayList de mercadorias vinculadas ao
      * caminhão
      *
-     * @param m - uma Mercadoria a ser adicionada
+     * @param m: uma Mercadoria a ser adicionada
      */
     public void addMercadoria(Mercadoria m) {
         mercadoriasPendentes.add(m);
@@ -60,7 +60,7 @@ public class Caminhao extends ItemMovel {
      * mercadoria se destina. Remove o primeiro índice do Array de mercadorias
      * Pendentes, para que a próxima mercadoria seja a primeira.
      *
-     * @return Mercadoria - uma Mercadoria
+     * @return Mercadoria -: uma Mercadoria
      */
     public Mercadoria carregar() {
         if (getProxMercadoria() != null) {
@@ -73,7 +73,7 @@ public class Caminhao extends ItemMovel {
     /**
      * Coleta o primeiro índice do Array de Mercadorias.
      *
-     * @return Mercadoria - uma Mercadoria
+     * @return Mercadoria -: uma Mercadoria ou null se o array estiver vazio
      */
     public Mercadoria getProxMercadoria() {
         if (!mercadoriasPendentes.isEmpty()) {
@@ -86,7 +86,7 @@ public class Caminhao extends ItemMovel {
     /**
      * Retorna se o Caminhão está carregado ou vazio
      *
-     * @return boolean - Caminhão carregado (true) ou descarregado (false)
+     * @return boolean -: Caminhão carregado (true) ou descarregado (false)
      */
     public boolean estaCarregado() {
         return carga;
@@ -95,7 +95,7 @@ public class Caminhao extends ItemMovel {
     /**
      * Declara o status de carregamento do caminhão
      *
-     * @param bool - carregar Caminhão (true) ou descarregar (false)
+     * @param bool: carregar Caminhão (true) ou descarregar (false)
      */
     private void setCarga(boolean bool) {
         carga = bool;

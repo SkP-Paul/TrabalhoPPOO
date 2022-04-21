@@ -17,8 +17,8 @@ public class Loja extends Item {
      * Construtor da Loja Cria a imagem da Loja no mapa, em sua posição fixa
      * declarada.
      *
-     * @param localizacao - uma Localização no mapa
-     * @param id - um inteiro incremetado para definir um id para a loja
+     * @param localizacao: uma Localização no mapa
+     * @param id: um inteiro incremetado para definir um id para a loja
      */
     public Loja(Localizacao localizacao, int id) {
         super(localizacao);
@@ -37,7 +37,7 @@ public class Loja extends Item {
     /**
      * Função para retornar o ID da loja.
      *
-     * @return id - um inteiro que é o id da loja
+     * @return int -: um inteiro que é o id da loja
      */
     public int getId() {
         return id;

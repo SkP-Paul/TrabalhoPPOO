@@ -11,7 +11,6 @@ public class Localizacao {
 
     private int x;
     private int y;
-    private Boolean ocupado;
     private static Random rand = new Random();
 
     /**
@@ -31,10 +30,6 @@ public class Localizacao {
 
     public int getY() {
         return y;
-    }
-
-    public Boolean getOcupacao() {
-        return ocupado;
     }
 
     /**

@@ -15,8 +15,8 @@ public class Mercadoria extends Item {
     /**
      * Construtor de uma mercadoria
      *
-     * @param localizacao - uma localização fixa no mapa
-     * @param loja - uma Loja de Destino para a mercadoria (fixa)
+     * @param localizacao: uma localização fixa no mapa
+     * @param loja: uma Loja de Destino para a mercadoria (fixa)
      */
     public Mercadoria(Localizacao localizacao, Loja loja) {
         super(localizacao);
@@ -35,7 +35,7 @@ public class Mercadoria extends Item {
     /**
      * Coletar a Loja de Destino
      *
-     * @return loja - retorna a loja de Destino da mercadoria
+     * @return Loja -: retorna a loja de Destino da mercadoria
      */
     public Loja getLoja() {
         return loja;

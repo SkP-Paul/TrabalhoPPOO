@@ -15,7 +15,7 @@ public class Ciclista extends ItemMovel {
      * Construtor de Ciclista Cria uma imagem de ciclista no mapa na sua posição
      * inicial
      *
-     * @param localizacao - uma Localização no mapa
+     * @param localizacao: uma Localização no mapa
      */
     public Ciclista(Localizacao localizacao) {
         super(localizacao);
