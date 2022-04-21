@@ -53,10 +53,10 @@ public class Simulacao {
          */
         for (int i = 0; i < qtdLojas; i++) {
             Loja loja = new Loja(new Localizacao(rand.nextInt(largura), 30), i);
-            Item item = mapa.getItem(loja.getLocalizacaoAtual());
+            Item item = mapa.getItem(loja.getLocalizacaoAtual().getX(), loja.getLocalizacaoAtual().getY());
             while (item != null) {
                 loja.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), 30));
-                item = mapa.getItem(loja.getLocalizacaoAtual());
+                item = mapa.getItem(loja.getLocalizacaoAtual().getX(), loja.getLocalizacaoAtual().getY());
             }
             lojas.add(loja);
             mapa.adicionarItem(loja);
@@ -69,10 +69,10 @@ public class Simulacao {
         for (int i = 0; i < qtdCiclistas; i++) {
             Ciclista ciclista = new Ciclista(localizacaoAleatoria());
             ciclista.setLocalizacaoDestino(localizacaoAleatoria());
-            Item item = mapa.getItem(ciclista.getLocalizacaoAtual());
+            Item item = mapa.getItem(ciclista.getLocalizacaoAtual().getX(), ciclista.getLocalizacaoAtual().getY());
             while (item != null) {
                 ciclista.setLocalizacaoAtual(localizacaoAleatoria());
-                item = mapa.getItem(ciclista.getLocalizacaoAtual());
+                item = mapa.getItem(ciclista.getLocalizacaoAtual().getX(), ciclista.getLocalizacaoAtual().getY());
             }
             ciclistas.add(ciclista);
             mapa.adicionarItem(ciclista);
@@ -84,10 +84,10 @@ public class Simulacao {
          */
         for (int i = 0; i < qtdCaminhoes; i++) {
             Caminhao caminhao = new Caminhao(localizacaoAleatoria());
-            Item item = mapa.getItem(caminhao.getLocalizacaoAtual());
+            Item item = mapa.getItem(caminhao.getLocalizacaoAtual().getX(), caminhao.getLocalizacaoAtual().getY());
             while (item != null) {
                 caminhao.setLocalizacaoAtual(localizacaoAleatoria());
-                item = mapa.getItem(caminhao.getLocalizacaoAtual());
+                item = mapa.getItem(caminhao.getLocalizacaoAtual().getX(), caminhao.getLocalizacaoAtual().getY());
             }
             veiculos.add(caminhao);
         }
@@ -99,10 +99,10 @@ public class Simulacao {
         for (int i = 0; i < qtdPedestres; i++) {
             Pedestre pedestre = new Pedestre(localizacaoAleatoria());
             pedestre.setLocalizacaoDestino(localizacaoAleatoria());
-            Item item = mapa.getItem(pedestre.getLocalizacaoAtual());
+            Item item = mapa.getItem(pedestre.getLocalizacaoAtual().getX(), pedestre.getLocalizacaoAtual().getY());
             while (item != null) {
                 pedestre.setLocalizacaoAtual(localizacaoAleatoria());
-                item = mapa.getItem(pedestre.getLocalizacaoAtual());
+                item = mapa.getItem(pedestre.getLocalizacaoAtual().getX(), pedestre.getLocalizacaoAtual().getY());
             }
             pedestres.add(pedestre);
         }
@@ -114,10 +114,10 @@ public class Simulacao {
          */
         for (int i = 0; i < qtdInicMerc; i++) {
             Mercadoria mercadoria = new Mercadoria(localizacaoAleatoria(), lojas.get(rand.nextInt(lojas.size())));
-            Item item = mapa.getItem(mercadoria.getLocalizacaoAtual());
+            Item item = mapa.getItem(mercadoria.getLocalizacaoAtual().getX(), mercadoria.getLocalizacaoAtual().getY());
             while (item != null) {
                 mercadoria.setLocalizacaoAtual(localizacaoAleatoria());
-                item = mapa.getItem(mercadoria.getLocalizacaoAtual());
+                item = mapa.getItem(mercadoria.getLocalizacaoAtual().getX(), mercadoria.getLocalizacaoAtual().getY());
             }
             mercadorias.add(mercadoria);
             Caminhao c = veiculos.get(rand.nextInt(veiculos.size()));
@@ -180,7 +180,7 @@ public class Simulacao {
         }
 
         for (Caminhao veiculo : veiculos) {
-            if (mapa.getItem(veiculo.getLocalizacaoAtual()) instanceof Caminhao) {
+            if (mapa.getItem(veiculo.getLocalizacaoAtual().getX(), veiculo.getLocalizacaoAtual().getY()) instanceof Caminhao) {
                 mapa.removerItem(veiculo);
             }
             if (veiculo.chegouDestino()) {
@@ -193,7 +193,7 @@ public class Simulacao {
                 }
             }
             veiculo.executarAcao(mapa);
-            if (mapa.getItem(veiculo.getLocalizacaoAtual()) instanceof Loja == false) {
+            if (mapa.getItem(veiculo.getLocalizacaoAtual().getX(), veiculo.getLocalizacaoAtual().getY()) instanceof Loja == false) {
                 mapa.adicionarItem(veiculo);
             }
         }
@@ -222,11 +222,6 @@ public class Simulacao {
      */
     private void criarNovaMercadoria() {
         Mercadoria mercadoria = new Mercadoria(localizacaoAleatoria(), lojas.get(rand.nextInt(lojas.size())));
-        Item item = mapa.getItem(mercadoria.getLocalizacaoAtual());
-        while (item != null) {
-            mercadoria.setLocalizacaoAtual(localizacaoAleatoria());
-            item = mapa.getItem(mercadoria.getLocalizacaoAtual());
-        }
         mercadorias.add(mercadoria);
         Caminhao c = veiculos.get(rand.nextInt(veiculos.size()));
         c.addMercadoria(mercadoria);
