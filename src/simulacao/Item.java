@@ -3,7 +3,7 @@ package simulacao;
 import java.awt.Image;
 
 /**
- * Representa os veiculos da simulacao.
+ * Representa os itens da simulacao.
  *
  * @author David J. Barnes and Michael Kolling and Luiz Merschmann
  */

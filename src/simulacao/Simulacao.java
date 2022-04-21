@@ -6,7 +6,10 @@ import java.util.List;
 
 /**
  * Responsavel pela simulacao.
- * @author Danilo Aparecido Namitala and Pedro H. Marques Siqueira and Jonas Fernandes dos Reis and Paulo Eduardo Soares Rezende
+ *
+ * @author David J. Barnes and Michael Kolling and Luiz Merschmann and Danilo
+ * Aparecido Namitala and Pedro H. Marques Siqueira and Jonas Fernandes dos Reis
+ * and Paulo Eduardo Soares Rezende
  */
 public class Simulacao {
 
@@ -20,8 +23,6 @@ public class Simulacao {
     private static int qtdCaminhoes = 1;
     private static int qtdCiclistas = 1;
     private static int qtdPedestres = 1;
-    private final int bordaEsquerda;
-    private final int bordaDireita;
     private JanelaSimulacao janelaSimulacao;
     private int contador = 0;
     private int velocidade = 0;
@@ -29,6 +30,7 @@ public class Simulacao {
     private Random rand;
     private int largura;
     private int altura;
+
     /**
      * Inicialização dos Atributos e execução do Programa
      */
@@ -37,8 +39,6 @@ public class Simulacao {
         largura = mapa.getLargura() - 1;
         altura = mapa.getAltura() - 1;
         rand = new Random();
-        bordaEsquerda = 0;
-        bordaDireita = largura;
 
         veiculos = new ArrayList<Caminhao>();
         pedestres = new ArrayList<Pedestre>();
@@ -46,11 +46,13 @@ public class Simulacao {
         mercadorias = new ArrayList<Mercadoria>();
         lojas = new ArrayList<Loja>();
         /**
-         * Inicialização das Lojas, atribuindo uma posição aleatória e fixa no mapa.
-         * Dentro do mapa podem existir várias Lojas, e estas são adicionadas a um arrayList separado.
+         * Inicialização das Lojas, atribuindo uma posição aleatória e fixa no
+         * mapa. Dentro do mapa podem existir várias Lojas, e estas são
+         * adicionadas a um arrayList separado, sendo que cada uma tera um ID
+         * definido pela variavel "i" utilizada no loop.
          */
         for (int i = 0; i < qtdLojas; i++) {
-            Loja loja = new Loja(new Localizacao(rand.nextInt(largura), 30));
+            Loja loja = new Loja(new Localizacao(rand.nextInt(largura), 30), i);
             Item item = mapa.getItem(loja.getLocalizacaoAtual());
             while (item != null) {
                 loja.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), 30));
@@ -60,56 +62,61 @@ public class Simulacao {
             mapa.adicionarItem(loja);
         }
         /**
-         * Inicialização dos Ciclistas, atribuindo uma posição aleatória inicial, e um destino aleatório inicial.
-         * Dentro do mapa podem existir vários Ciclistas, e estes são adicionados a um arrayList separado.
+         * Inicialização dos Ciclistas, atribuindo uma posição aleatória
+         * inicial, e um destino aleatório inicial. Dentro do mapa podem existir
+         * vários Ciclistas, e estes são adicionados a um arrayList separado.
          */
         for (int i = 0; i < qtdCiclistas; i++) {
-            Ciclista ciclista = new Ciclista(new Localizacao(bordaEsquerda, rand.nextInt(25)+5));
-            ciclista.setLocalizacaoDestino(new Localizacao(bordaDireita, rand.nextInt(25)+5));
+            Ciclista ciclista = new Ciclista(localizacaoAleatoria());
+            ciclista.setLocalizacaoDestino(localizacaoAleatoria());
             Item item = mapa.getItem(ciclista.getLocalizacaoAtual());
             while (item != null) {
-                ciclista.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
+                ciclista.setLocalizacaoAtual(localizacaoAleatoria());
                 item = mapa.getItem(ciclista.getLocalizacaoAtual());
             }
             ciclistas.add(ciclista);
             mapa.adicionarItem(ciclista);
         }
         /**
-         * Inicialização dos Caminhões, atribuindo uma posição aleatória inicial, sem um destino atual.
-         * Dentro do mapa podem existir vários Caminhões, e estes são adicionados a um arrayList separado.
+         * Inicialização dos Caminhões, atribuindo uma posição aleatória
+         * inicial, sem um destino atual. Dentro do mapa podem existir vários
+         * Caminhões, e estes são adicionados a um arrayList separado.
          */
         for (int i = 0; i < qtdCaminhoes; i++) {
-            Caminhao caminhao = new Caminhao(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
+            Caminhao caminhao = new Caminhao(localizacaoAleatoria());
             Item item = mapa.getItem(caminhao.getLocalizacaoAtual());
             while (item != null) {
-                caminhao.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
+                caminhao.setLocalizacaoAtual(localizacaoAleatoria());
                 item = mapa.getItem(caminhao.getLocalizacaoAtual());
             }
             veiculos.add(caminhao);
         }
         /**
-         * Inicialização dos Pedestres, atribuindo uma posição aleatória inicial, e um destino aleatório.
-         * Dentro do mapa podem existir vários Pedestres, e estes são adicionados a um arrayList separado.
+         * Inicialização dos Pedestres, atribuindo uma posição aleatória
+         * inicial, e um destino aleatório. Dentro do mapa podem existir vários
+         * Pedestres, e estes são adicionados a um arrayList separado.
          */
         for (int i = 0; i < qtdPedestres; i++) {
-            Pedestre pedestre = new Pedestre(new Localizacao(bordaDireita, rand.nextInt(25)+5));
-            pedestre.setLocalizacaoDestino(new Localizacao(bordaEsquerda, rand.nextInt(25)+5));
+            Pedestre pedestre = new Pedestre(localizacaoAleatoria());
+            pedestre.setLocalizacaoDestino(localizacaoAleatoria());
             Item item = mapa.getItem(pedestre.getLocalizacaoAtual());
             while (item != null) {
-                pedestre.setLocalizacaoAtual(new Localizacao(rand.nextInt(largura), rand.nextInt(25)+5));
+                pedestre.setLocalizacaoAtual(localizacaoAleatoria());
                 item = mapa.getItem(pedestre.getLocalizacaoAtual());
             }
             pedestres.add(pedestre);
         }
         /**
-         * Inicialização das Mercadorias, atribuindo uma posição aleatória fixa, um caminhão para coletá-la e uma Loja Destino.
-         * Dentro do mapa podem existir vários Pedestres, e estes são adicionados a um arrayList separado.
+         * Inicialização das Mercadorias, atribuindo uma posição aleatória fixa,
+         * um caminhão para coletá-la e uma Loja Destino. Dentro do mapa podem
+         * existir vários Pedestres, e estes são adicionados a um arrayList
+         * separado.
          */
         for (int i = 0; i < qtdInicMerc; i++) {
-            Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(33)+1, rand.nextInt(15)+1), lojas.get(rand.nextInt(lojas.size())));
+            Mercadoria mercadoria = new Mercadoria(localizacaoAleatoria(), lojas.get(rand.nextInt(lojas.size())));
             Item item = mapa.getItem(mercadoria.getLocalizacaoAtual());
             while (item != null) {
-                mercadoria.setLocalizacaoAtual(new Localizacao(rand.nextInt(33)+1, rand.nextInt(15)+1));
+                mercadoria.setLocalizacaoAtual(localizacaoAleatoria());
                 item = mapa.getItem(mercadoria.getLocalizacaoAtual());
             }
             mercadorias.add(mercadoria);
@@ -120,8 +127,10 @@ public class Simulacao {
 
         janelaSimulacao = new JanelaSimulacao(mapa);
     }
+
     /**
      * Inicialização da Execução do Programa
+     *
      * @param numPassos - número de passos a serem executados
      */
     public void executarSimulacao(int numPassos) {
@@ -141,33 +150,33 @@ public class Simulacao {
             esperar(100);
         }
     }
+
     /**
-     *  Função para executar um movimento de cada elemento (Caminhão, Ciclista e Pedestre)
-     *  Faz uso de um contador (velocidade) em que o resto de sua divisão determina qual elemento deve ser movimentado
+     * Função para executar um movimento de cada elemento (Caminhão, Ciclista e
+     * Pedestre) Faz uso de um contador (velocidade) em que o resto de sua
+     * divisão determina qual elemento deve ser movimentado
      */
     private void executarUmPasso() {
         if (velocidade % 2 == 0) {
             for (Ciclista c : ciclistas) {
                 mapa.removerItem(c);
                 if (c.chegouDestino()) {
-                    c.setLocalizacaoAtual(new Localizacao(bordaEsquerda, rand.nextInt(25)+5));
+                    c.setLocalizacaoDestino(localizacaoAleatoria());
                 }
                 c.executarAcao(mapa);
                 mapa.adicionarItem(c);
             }
-            System.out.println("ciclista ok");
         }
 
         if (velocidade % 3 == 0) {
             for (Pedestre p : pedestres) {
                 mapa.removerItem(p);
                 if (p.chegouDestino()) {
-                    p.setLocalizacaoAtual(new Localizacao(bordaDireita, rand.nextInt(25)+5));
+                    p.setLocalizacaoDestino(localizacaoAleatoria());
                 }
                 p.executarAcao(mapa);
                 mapa.adicionarItem(p);
             }
-            System.out.println("pedestre ok");
         }
 
         for (Caminhao veiculo : veiculos) {
@@ -188,14 +197,15 @@ public class Simulacao {
                 mapa.adicionarItem(veiculo);
             }
         }
-        System.out.println("carro ok");
 
         velocidade++;
         contador++;
         janelaSimulacao.executarAcao();
     }
+
     /**
      * Função para realizar uma espera em milisegundos entre cada ação no mapa
+     *
      * @param milisegundos - tempo em milisegundos
      */
     private void esperar(int milisegundos) {
@@ -205,18 +215,27 @@ public class Simulacao {
             System.out.println(e.getMessage());
         }
     }
+
     /**
      * Inserção de nova mercadoria ao Mapa
      */
     private void criarNovaMercadoria() {
-        Mercadoria mercadoria = new Mercadoria(new Localizacao(rand.nextInt(33)+1, rand.nextInt(15)+1), lojas.get(rand.nextInt(lojas.size())));
+        Mercadoria mercadoria = new Mercadoria(localizacaoAleatoria(), lojas.get(rand.nextInt(lojas.size())));
+        Item item = mapa.getItem(mercadoria.getLocalizacaoAtual());
+        while (item != null) {
+            mercadoria.setLocalizacaoAtual(localizacaoAleatoria());
+            item = mapa.getItem(mercadoria.getLocalizacaoAtual());
+        }
         mercadorias.add(mercadoria);
         Caminhao c = veiculos.get(rand.nextInt(veiculos.size()));
         c.addMercadoria(mercadoria);
         mapa.adicionarItem(mercadoria);
     }
+
     /**
-     * Recepção de configuração realizada pelo usuário, determina a quantidade de cada elemento móvel na simulação
+     * Recepção de configuração realizada pelo usuário, determina a quantidade
+     * de cada elemento móvel na simulação
+     *
      * @param pedestres - Quantidade de Pedestres
      * @param ciclistas - Quantidade de Ciclistas
      * @param caminhoes - Quantidade de Caminhões
@@ -225,5 +244,12 @@ public class Simulacao {
         qtdPedestres = pedestres;
         qtdCiclistas = ciclistas;
         qtdCaminhoes = caminhoes;
+    }
+
+    /**
+     * Gera uma localização aleatória
+     */
+    private Localizacao localizacaoAleatoria() {
+        return new Localizacao(rand.nextInt(largura), rand.nextInt(altura));
     }
 }
