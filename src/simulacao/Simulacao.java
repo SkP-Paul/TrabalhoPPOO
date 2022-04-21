@@ -207,6 +207,7 @@ public class Simulacao {
      * Função para realizar uma espera em milisegundos entre cada ação no mapa
      *
      * @param milisegundos - tempo em milisegundos
+     * @exception - InterruptedException
      */
     private void esperar(int milisegundos) {
         try {

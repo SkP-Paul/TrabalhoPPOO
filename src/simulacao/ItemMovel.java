@@ -24,6 +24,9 @@ public class ItemMovel extends Item {
      * Ciclista, Pedestre ou Caminhão
      *
      * @param mapa - o mapa da simulação
+     * @exception IndexOutOfBoundsException - exceção de que pode ser sorteado
+     * uma Localização fora do tamanho do mapa e se ocorrer é gerada uma nova
+     * Localização
      */
     public void executarAcao(Mapa mapa) {
         Localizacao destino = getLocalizacaoDestino();

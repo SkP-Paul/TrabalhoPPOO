@@ -36,6 +36,17 @@ public class MenuPrincipal {
         sliderCaminhoes = new JSlider(1, 5, 1);
         botaoConfirmar = new JButton("Confirmar");
         verificacao = false;
+        botaoConfirmar.addActionListener(new ActionListener() { // Confirmação do Usuário na tela de configuração
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int pedestres = sliderPedestres.getValue();
+                int ciclistas = sliderCiclistas.getValue();
+                int caminhoes = sliderCaminhoes.getValue();
+                Simulacao.ajustarConfiguracoes(pedestres, ciclistas, caminhoes); // Ajuste de configuração com as entradas do Usuário
+                verificacao = true;
+                janela.dispose();
+            }
+        });
 
         montarJanela();
         janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,17 +80,6 @@ public class MenuPrincipal {
         painelSul.setLayout(new FlowLayout());
         painelSul.add(botaoConfirmar);
         janela.add(painelSul, BorderLayout.SOUTH);
-        botaoConfirmar.addActionListener(new ActionListener() { // Confirmação do Usuário na tela de configuração
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int pedestres = sliderPedestres.getValue();
-                int ciclistas = sliderCiclistas.getValue();
-                int caminhoes = sliderCaminhoes.getValue();
-                Simulacao.ajustarConfiguracoes(pedestres, ciclistas, caminhoes); // Ajuste de configuração com as entradas do Usuário
-                verificacao = true;
-                janela.dispose();
-            }
-        });
     }
 
     /**

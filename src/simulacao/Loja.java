@@ -37,8 +37,6 @@ public class Loja extends Item {
     /**
      * Função para retornar o ID da loja.
      *
-     * Example: id = 1; this.getId() = 1;
-     *
      * @return id - um inteiro que é o id da loja
      */
     public int getId() {

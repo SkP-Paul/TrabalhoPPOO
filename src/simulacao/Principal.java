@@ -6,9 +6,15 @@ package simulacao;
  *
  * @author Danilo Aparecido Namitala and Pedro H. Marques Siqueira and Jonas
  * Fernandes dos Reis and Paulo Eduardo Soares Rezende
+ *
  */
 public class Principal {
 
+    /**
+     * Função main
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         MenuPrincipal janela = new MenuPrincipal();
         janela.exibirJanela();
